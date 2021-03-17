@@ -1,4 +1,9 @@
 package com.pharma.employee.repositories;
 
-public interface AvailabilityRepository {
+import com.pharma.employee.models.Availability;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface AvailabilityRepository extends JpaRepository<Availability, Long> {
 }
