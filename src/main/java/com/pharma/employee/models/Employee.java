@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,5 +25,13 @@ public class Employee {
     private Gender gender;
     @Column(name = "DateOfBirth")
     private Date dateOfBirth;
+    @OneToMany(mappedBy = "employee")
+    private List<Schedule> schedules;
+    @OneToMany(mappedBy = "employee")
+    private List<Role> roles;
+
+    public Employee(){
+
+    }
 }
 

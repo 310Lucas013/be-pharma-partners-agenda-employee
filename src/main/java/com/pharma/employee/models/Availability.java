@@ -17,7 +17,11 @@ public class Availability {
     private Date startTime;
     @Column(name = "EndTime")
     private Date endTime;
+    @ManyToOne
+    @JoinColumn(name="schedule_id", nullable=false)
+    private Schedule schedule;
 
-
+    public Availability(){
+    }
 
 }

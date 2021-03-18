@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "Role")
+@Table(name = "_Role")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,5 +16,12 @@ public class Role {
     private String name;
     @Column(name = "Description")
     private String description;
+    @ManyToOne
+    @JoinColumn(name="employee_id", nullable=false)
+    private Employee employee;
+
+    public Role(){
+
+    }
 
 }

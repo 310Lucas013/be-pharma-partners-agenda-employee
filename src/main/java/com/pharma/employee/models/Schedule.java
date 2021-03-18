@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,14 +19,13 @@ public class Schedule {
     private Date startDate;
     @Column(name = "EndDate")
     private Date endDate;
+    @OneToMany(mappedBy = "schedule")
+    private List<Availability> availabilities;
+    @ManyToOne()
+    @JoinColumn(name="employee_id", nullable=false)
+    private Employee employee;
 
     public Schedule() {
 
-    }
-
-    public Schedule(long id, Date startDate, Date endDate) {
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
     }
 }
