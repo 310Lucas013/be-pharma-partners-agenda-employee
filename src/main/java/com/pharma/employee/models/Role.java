@@ -10,11 +10,11 @@ import javax.persistence.*;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private long id;
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
-    @Column(name = "Description")
+    @Column(name = "description")
     private String description;
     @ManyToOne
     @JoinColumn(name="employee_id", nullable=false)

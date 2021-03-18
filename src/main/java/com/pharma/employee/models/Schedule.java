@@ -13,11 +13,11 @@ import java.util.Set;
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private long id;
-    @Column(name = "StartDate")
+    @Column(name = "start_date")
     private Date startDate;
-    @Column(name = "EndDate")
+    @Column(name = "end_date")
     private Date endDate;
     @OneToMany(mappedBy = "schedule")
     private List<Availability> availabilities;
