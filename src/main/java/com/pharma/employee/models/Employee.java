@@ -29,6 +29,8 @@ public class Employee {
     private List<Schedule> schedules;
     @OneToMany(mappedBy = "employee")
     private List<Role> roles;
+    @Column(name = "location_id")
+    private long locationId;
 
     public Employee(){
 
