@@ -12,23 +12,25 @@ import java.util.List;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private long id;
-    @Column(name = "FirstName")
+    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "LastName")
+    @Column(name = "last_name")
     private String lastName;
-    @Column(name = "MiddleName")
+    @Column(name = "middle_name")
     private String middleName;
     @Enumerated(EnumType.STRING)
-    @Column(name = "Gender")
+    @Column(name = "gender")
     private Gender gender;
-    @Column(name = "DateOfBirth")
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
     @OneToMany(mappedBy = "employee")
     private List<Schedule> schedules;
     @OneToMany(mappedBy = "employee")
     private List<Role> roles;
+    @Column(name = "location_id")
+    private long locationId;
 
     public Employee(){
 

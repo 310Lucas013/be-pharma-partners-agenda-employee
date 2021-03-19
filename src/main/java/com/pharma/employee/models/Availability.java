@@ -11,11 +11,11 @@ import java.util.Date;
 public class Availability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private long id;
-    @Column(name = "StartTime")
+    @Column(name = "start_time")
     private Date startTime;
-    @Column(name = "EndTime")
+    @Column(name = "end_time")
     private Date endTime;
     @ManyToOne
     @JoinColumn(name="schedule_id", nullable=false)
