@@ -32,8 +32,19 @@ public class Employee {
     @Column(name = "location_id")
     private long locationId;
 
-    public Employee(){
+    public Employee(){}
 
+    public Employee(long id, String firstName, String lastName, String middleName, Gender gender,
+                    Date dateOfBirth, List<Schedule> schedules, List<Role> roles, long locationId){
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.schedules = schedules;
+        this.roles = roles;
+        this.locationId = locationId;
     }
 }
 

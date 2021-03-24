@@ -1,24 +1,33 @@
 package com.pharma.employee.controllers;
 
 import com.pharma.employee.models.Employee;
+import com.pharma.employee.models.Gender;
 import com.pharma.employee.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
+@CrossOrigin(origins = {"http://localhost: 8082","http://localhost:4200"})
 @RequestMapping("/employees")
 public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
+    Employee employee1 = new Employee(1, "Joep","Janssen", "", Gender.Male, new Date(), null, null, 1);
+    Employee employee2 = new Employee(2, "Dirk","Wiel", "van der", Gender.Male, new Date(), null, null, 1);
+
     @GetMapping("/all")
     public ResponseEntity<List<Employee>> all() {
-        return new ResponseEntity<>(employeeService.getAll(), HttpStatus.OK);
+        ArrayList<Employee> employeeList = new ArrayList<>();
+        employeeList.add(employee1);
+        employeeList.add(employee2);
+        return new ResponseEntity<>(employeeList, HttpStatus.OK);
     }
 
     @PostMapping("/add")
