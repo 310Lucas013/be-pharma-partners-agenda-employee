@@ -5,9 +5,13 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 public class MessageBrokerConfiguration {
@@ -19,9 +23,14 @@ public class MessageBrokerConfiguration {
     @Value("${rabbitmq.routingKey}")
     private String routingKey;
 
-    @Bean
-    public Queue queue() {
-        return new Queue(queueName);
+    @Bean("queue-create-appointment")
+    public Queue queueCreateAppointment() {
+        return new Queue("queue-create-appointment", true);
+    }
+
+    @Bean("queue-update-appointment")
+    public Queue queueUpdateAppointment() {
+        return new Queue("queue-update-appointment", true);
     }
 
     @Bean
@@ -30,9 +39,15 @@ public class MessageBrokerConfiguration {
     }
 
     @Bean
-    Binding binding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingKey);
+    public Binding bindingCreateAppointment(@Qualifier("queue-create-appointment") Queue queue, DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with("create-appointment");
     }
+
+    @Bean
+    public Binding bindingUpdateAppointment(@Qualifier("queue-update-appointment") Queue queue, DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with("update-appointment");
+    }
+
 
     @Bean
     public MessageConverter jsonMessageConverter() {
@@ -46,4 +61,3 @@ public class MessageBrokerConfiguration {
         return rabbitTemplate;
     }
 }
-
