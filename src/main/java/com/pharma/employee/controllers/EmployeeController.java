@@ -18,15 +18,9 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    Employee employee1 = new Employee(1, "Joep","Janssen", "", Gender.Male, new Date(), null, null, 1);
-    Employee employee2 = new Employee(2, "Dirk","Wiel", "van der", Gender.Male, new Date(), null, null, 1);
-
     @GetMapping("/all")
     public ResponseEntity<List<Employee>> all() {
-        ArrayList<Employee> employeeList = new ArrayList<>();
-        employeeList.add(employee1);
-        employeeList.add(employee2);
-        return new ResponseEntity<>(employeeList, HttpStatus.OK);
+        return new ResponseEntity<>(employeeService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping("/add")
