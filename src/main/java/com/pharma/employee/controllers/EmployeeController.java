@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/employees")
@@ -18,39 +19,34 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    @GetMapping("/all")
+    @GetMapping(value = "/all", produces = "application/json")
     public ResponseEntity<List<Employee>> all() {
         return new ResponseEntity<>(employeeService.getAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        Optional<Employee> employee = employeeService.findbyId(id);
+        if(employee.isEmpty()){
+            return new ResponseEntity<>("Employee not found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(employee.get(), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/add", produces = "application/json")
     public ResponseEntity<Employee> add(Employee employee) {
         return new ResponseEntity<>(employeeService.add(employee), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Employee> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         employeeService.delete(id);
-
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>("Employee deleted", HttpStatus.OK);
     }
 
-    @PutMapping("/employees/{id}")
-    public ResponseEntity<Employee> put(@RequestBody Employee newEmployee, @PathVariable long id) {
-        employeeService.findbyId(id)
-                .map(employee -> {
-                    employee.setFirstName(newEmployee.getFirstName());
-                    employee.setMiddleName(newEmployee.getMiddleName());
-                    employee.setLastName(newEmployee.getLastName());
-                    employee.setGender(newEmployee.getGender());
-                    employee.setDateOfBirth(newEmployee.getDateOfBirth());
-                    return new ResponseEntity<>(employeeService.add(employee), HttpStatus.OK);
-                })
-                .orElseGet(() -> {
-                    newEmployee.setId(id);
-                    return new ResponseEntity<>(employeeService.add(newEmployee), HttpStatus.OK);
-                });
-        return new ResponseEntity<>(employeeService.add(newEmployee), HttpStatus.BAD_GATEWAY);
+    @PutMapping(value = "/update", produces = "application/json")
+    public ResponseEntity<Employee> put(Employee employee) {
+        return new ResponseEntity<>(employeeService.add(employee), HttpStatus.OK);
     }
 
 }
