@@ -1,7 +1,5 @@
 package com.pharma.employee.models;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.util.Date;
 
