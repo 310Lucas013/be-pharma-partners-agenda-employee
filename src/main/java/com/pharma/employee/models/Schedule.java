@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
 @Table(name = "Schedule")
 public class Schedule {
     @Id
@@ -27,5 +26,53 @@ public class Schedule {
 
     public Schedule() {
 
+    }
+
+    public Schedule(long id, Date startDate, Date endDate, List<Availability> availabilities, Employee employee) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.availabilities = availabilities;
+        this.employee = employee;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public List<Availability> getAvailabilities() {
+        return availabilities;
+    }
+
+    public void setAvailabilities(List<Availability> availabilities) {
+        this.availabilities = availabilities;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }
