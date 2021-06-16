@@ -1,7 +1,9 @@
 package com.pharma.employee;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.pharma.employee.config.JwtAuthenticationEntryPoint;
+import com.pharma.employee.config.JwtTokenUtil;
+import com.pharma.employee.config.WebSecurityConfiguration;
 import com.pharma.employee.controllers.EmployeeController;
 import com.pharma.employee.models.Employee;
 import com.pharma.employee.models.Gender;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -42,6 +45,12 @@ class EmployeeControllerTests {
 
 	@MockBean
 	private EmployeeService employeeService;
+	@Autowired
+	private WebSecurityConfiguration webSecurityConfiguration;
+	@MockBean
+	private JwtTokenUtil jwtTokenUtil;
+	@MockBean
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
 	@Before
 	public void setUp() {
@@ -51,9 +60,13 @@ class EmployeeControllerTests {
 	@Test
 	public void contextLoads() {
 		assertThat(employeeService).isNotNull();
+		assertThat(webSecurityConfiguration).isNotNull();
+		assertThat(jwtAuthenticationEntryPoint).isNotNull();
+		assertThat(jwtTokenUtil).isNotNull();
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = "admin")
 	public void getAllEmployeesAPI()
 			throws Exception {
 		Employee employee1 = new Employee(1, "Test First", "Test Last", "Test Middle", Gender.Male,
@@ -76,6 +89,7 @@ class EmployeeControllerTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = "admin")
 	public void addEmployeeAPI()
 			throws Exception {
 		Employee employee = new Employee(1, "Test First", "Test Last", "Test Middle", Gender.Male,
@@ -91,6 +105,7 @@ class EmployeeControllerTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = "admin")
 	public void getEmployeeByIdAPI()
 			throws Exception {
 		Employee employee = new Employee(1, "Test First", "Test Last", "Test Middle", Gender.Male,
@@ -107,6 +122,7 @@ class EmployeeControllerTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = "admin")
 	public void getEmployeeByIdEmptyAPI()
 			throws Exception {
 		given(employeeService.findbyId((long) 1)).willReturn(java.util.Optional.empty());
@@ -119,6 +135,7 @@ class EmployeeControllerTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = "admin")
 	public void updateEmployeeAPI()
 			throws Exception {
 		Employee employee = new Employee(1, "Test First", "Test Last", "Test Middle", Gender.Male,
@@ -134,6 +151,7 @@ class EmployeeControllerTests {
 	}
 
 	@Test
+	@WithMockUser(username = "admin", roles = "admin")
 	public void deleteEmployeeAPI()
 			throws Exception {
 		mvc.perform(MockMvcRequestBuilders
